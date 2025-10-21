@@ -1,0 +1,1 @@
+enum RegisterMode { stockOut, stockIn }
