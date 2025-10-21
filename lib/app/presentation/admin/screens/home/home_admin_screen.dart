@@ -1,3 +1,4 @@
+import 'package:easy_stock/app/presentation/admin/screens/home/components/stat_card.dart';
 import 'package:easy_stock/app/presentation/admin/screens/product_management/product_management_screen.dart';
 import 'package:easy_stock/app/core/ui/components/card_action_widget.dart';
 import 'package:easy_stock/app/core/ui/screen/historical_screen.dart';
@@ -44,32 +45,28 @@ class HomeAdmin extends StatelessWidget {
               ),
               SizedBox(height: 12),
               Wrap(
+                alignment: WrapAlignment.start,
                 spacing: 16.0, // Espaço horizontal entre os cards
                 runSpacing: 16.0, // Espaço vertical entre as linhas
                 children: [
                   // Simulação de Card de Indicador 1
-                  _buildStatCard(
-                    context,
-                    'Total de Itens',
-                    '1.245',
-                    Icons.storage,
-                    Colors.teal,
+                  StatCard(
+                    title: 'Total de Itens',
+                    value: '1.245',
+                    icon: Icons.storage,
+                    color: Colors.teal,
                   ),
-                  // Simulação de Card de Indicador 2
-                  _buildStatCard(
-                    context,
-                    'Último Mês',
-                    '+120 Saídas',
-                    Icons.trending_down,
-                    Colors.red,
+                  StatCard(
+                    title: 'Último Mês',
+                    value: '+120 Saídas',
+                    icon: Icons.trending_down,
+                    color: Colors.red,
                   ),
-                  // Simulação de Card de Indicador 3
-                  _buildStatCard(
-                    context,
-                    'Produtos Cad.',
-                    '45',
-                    Icons.category,
-                    Colors.indigo,
+                  StatCard(
+                    title: 'Produtos Cad.',
+                    value: '45',
+                    icon: Icons.category,
+                    color: Colors.indigo,
                   ),
                 ],
               ),
@@ -122,45 +119,11 @@ class HomeAdmin extends StatelessWidget {
     );
   }
 
-  Widget _buildStatCard(
-    BuildContext context,
-    String title,
-    String value,
-    IconData icon,
-    Color color,
-  ) {
-    return Container(
-      width:
-          (MediaQuery.of(context).size.width / 2) -
-          24, // Metade da tela menos o padding
-      child: Card(
-        color: color.withOpacity(0.9),
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(icon, size: 30, color: Colors.white),
-              SizedBox(height: 8),
-              Text(
-                value,
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              SizedBox(height: 4),
-              Text(
-                title,
-                style: TextStyle(fontSize: 14, color: Colors.white70),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _buildStatCard(
+  //   BuildContext context,
+  //   String title,
+  //   String value,
+  //   IconData icon,
+  //   Color color,
+  // ) {}
 }

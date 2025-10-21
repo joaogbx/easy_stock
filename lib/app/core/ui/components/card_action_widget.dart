@@ -19,6 +19,13 @@ class CardActionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
+      // Cor de fundo alterada para tom escuro
+      color: const Color.fromARGB(
+        255,
+        140,
+        37,
+        199,
+      ), // Cinza escuro para o Card
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: InkWell(
         onTap: onTap,
@@ -27,7 +34,8 @@ class CardActionWidget extends StatelessWidget {
           padding: const EdgeInsets.all(12.0),
           child: Row(
             children: [
-              Icon(icon, size: 30, color: Theme.of(context).primaryColor),
+              // Cor do ícone principal alterada para branco
+              Icon(icon, size: 30, color: Colors.white),
               SizedBox(width: 15),
               Expanded(
                 child: Column(
@@ -38,17 +46,24 @@ class CardActionWidget extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
+                        // Cor do título alterada para branco
+                        color: Colors.white,
                       ),
                     ),
                     SizedBox(height: 4),
                     Text(
                       subtitle,
-                      style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                      style: TextStyle(
+                        fontSize: 14,
+                        // Cor do subtítulo alterada para branco suave
+                        color: Colors.white70,
+                      ),
                     ),
                   ],
                 ),
               ),
-              Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+              // Cor do ícone de seta alterada para branco suave
+              Icon(Icons.arrow_forward_ios, size: 16, color: Colors.white54),
             ],
           ),
         ),
