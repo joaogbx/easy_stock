@@ -1,8 +1,7 @@
-import 'package:easy_stock/app/presentation/admin/screens/home/components/stat_card.dart';
+import 'package:easy_stock/app/presentation/components/stat_card.dart';
 import 'package:easy_stock/app/presentation/admin/screens/product_management/product_management_screen.dart';
 import 'package:easy_stock/app/core/ui/components/card_action_widget.dart';
 import 'package:easy_stock/app/core/ui/screen/historical_screen.dart';
-import 'package:easy_stock/home.dart';
 import 'package:flutter/material.dart';
 
 class HomeAdmin extends StatelessWidget {
@@ -14,33 +13,68 @@ class HomeAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Dashboard Admin'),
-        centerTitle: true,
-        actions: [
-          // Botão de Alternância
-          TextButton.icon(
-            label: Text('Funcionário', style: TextStyle(color: Colors.white)),
-            icon: Icon(Icons.swap_horiz, color: Colors.white),
-            onPressed: onToggle,
-          ),
-        ],
-      ),
+      backgroundColor: const Color.fromARGB(255, 20, 20, 20),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // ------------------------------------
-              // Painel de Resumo (Simulação de Indicadores)
-              // ------------------------------------
+              SizedBox(height: 40),
+              Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Dashboard',
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: TextButton.icon(
+                      label: Text(
+                        'Funcionário',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      icon: Icon(Icons.swap_horiz, color: Colors.white),
+                      onPressed: onToggle,
+                    ),
+                  ),
+                ],
+              ),
+
+              Row(
+                children: [
+                  CircleAvatar(radius: 40),
+                  SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Nome do usuario',
+                        style: TextStyle(color: Colors.white, fontSize: 22),
+                      ),
+                      Text(
+                        'Administrador',
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                    ],
+                  ),
+                  Spacer(),
+                  IconButton(
+                    icon: Icon(Icons.settings, color: Colors.white),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+              SizedBox(height: 30),
               Text(
                 'Resumo Geral',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: const Color.fromARGB(221, 255, 255, 255),
                 ),
               ),
               SizedBox(height: 12),
@@ -71,16 +105,12 @@ class HomeAdmin extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 30),
-
-              // ------------------------------------
-              // Ações Administrativas
-              // ------------------------------------
               Text(
                 'Gestão e Relatórios',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: const Color.fromARGB(221, 255, 255, 255),
                 ),
               ),
               SizedBox(height: 12),
@@ -97,6 +127,7 @@ class HomeAdmin extends StatelessWidget {
                   );
                 },
               ),
+              SizedBox(height: 20),
               CardActionWidget(
                 icon: Icons.bar_chart,
                 title: 'Relatório Completo',
