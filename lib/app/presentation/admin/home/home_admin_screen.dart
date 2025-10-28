@@ -1,5 +1,5 @@
 import 'package:easy_stock/app/presentation/components/stat_card.dart';
-import 'package:easy_stock/app/presentation/admin/screens/product_management/product_management_screen.dart';
+import 'package:easy_stock/app/presentation/admin/product_management_screen/product_management_screen.dart';
 import 'package:easy_stock/app/core/ui/components/card_action_widget.dart';
 import 'package:easy_stock/app/core/ui/screen/historical_screen.dart';
 import 'package:flutter/material.dart';

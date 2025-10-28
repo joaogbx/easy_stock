@@ -1,5 +1,5 @@
-import 'package:easy_stock/app/presentation/admin/screens/home/home_admin_screen.dart';
-import 'package:easy_stock/app/presentation/employee/screens/home/home_employee.dart';
+import 'package:easy_stock/app/presentation/admin/home/home_admin_screen.dart';
+import 'package:easy_stock/app/presentation/employee/home/home_employee.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -34,6 +34,45 @@ class MyApp extends StatelessWidget {
             textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             elevation: 2,
           ),
+        ),
+        inputDecorationTheme: const InputDecorationTheme(
+          filled: true,
+          fillColor: Color.fromRGBO(
+            255,
+            255,
+            255,
+            0.08,
+          ), // Fundo suave para o campo
+          hintStyle: TextStyle(color: Colors.white70),
+
+          // Configurações para REMOVER o Underline/Linha Inferior Padrão:
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            borderSide: BorderSide.none, // Remove a borda padrão
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            borderSide: BorderSide
+                .none, // Garante que a borda de foco também seja invisível
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            borderSide:
+                BorderSide.none, // Garante que a borda ativada seja invisível
+          ),
+
+          contentPadding: EdgeInsets.symmetric(
+            vertical: 18.0,
+            horizontal: 15.0,
+          ),
+        ),
+
+        // 2. Configuração da cor do CURSOR (Ponteiro)
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Colors
+              .white, // Define a cor do cursor (ponteiro de texto) como branco
+          selectionColor: Colors.white30, // Cor de seleção de texto
+          selectionHandleColor: Colors.white, // Cor do puxador de seleção
         ),
       ),
       home: Wrapper(),

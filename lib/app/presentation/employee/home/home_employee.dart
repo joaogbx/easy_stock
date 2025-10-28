@@ -2,7 +2,8 @@ import 'package:easy_stock/app/core/ui/components/card_action_widget.dart';
 import 'package:easy_stock/app/core/ui/components/register_movement_button.dart';
 import 'package:easy_stock/app/core/enums/register_mode.dart';
 import 'package:easy_stock/app/core/ui/screen/historical_screen.dart';
-import 'package:easy_stock/app/presentation/employee/screens/register_movement/register_movement.dart';
+import 'package:easy_stock/app/presentation/config/config_page.dart';
+import 'package:easy_stock/app/presentation/employee/register_movement/register_movement.dart';
 import 'package:easy_stock/app/core/ui/screen/stock_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -40,7 +41,7 @@ class HomeEmployee extends StatelessWidget {
       // CORREÇÃO: Cor de fundo do Scaffold é onde o Body aparece
       backgroundColor: const Color.fromARGB(255, 20, 20, 20),
       body: RefreshIndicator(
-        color: const Color.fromARGB(255, 140, 37, 199),
+        color: const Color.fromARGB(255, 83, 22, 119),
         // Cor do círculo de progresso
         backgroundColor: const Color.fromARGB(
           255,
@@ -104,7 +105,20 @@ class HomeEmployee extends StatelessWidget {
                       alignment: Alignment.topRight,
                       child: IconButton(
                         icon: Icon(Icons.settings, color: Colors.white),
-                        onPressed: () {},
+                        onPressed: () {
+                          showModalBottomSheet(
+                            backgroundColor: const Color.fromARGB(
+                              255,
+                              20,
+                              20,
+                              20,
+                            ),
+                            context: context,
+                            builder: (context) {
+                              return SettingsScreenOption2();
+                            },
+                          );
+                        },
                       ),
                     ),
                   ],
