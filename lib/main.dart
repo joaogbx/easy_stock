@@ -1,9 +1,11 @@
+import 'package:easy_stock/app/core/config/injection.dart';
 import 'package:easy_stock/app/presentation/admin/home/home_admin_screen.dart';
 import 'package:easy_stock/app/presentation/employee/home/home_employee.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  // O ponto de entrada real do FlutterFlow/App Flutter
+  configureDependencies();
+
   runApp(MyApp());
 }
 

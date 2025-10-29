@@ -1,5 +1,5 @@
-import 'package:easy_stock/domain/models/company_model.dart';
-import 'package:easy_stock/domain/models/stock_movement.dart';
+import 'package:easy_stock/app/core/data/models/company_model.dart';
+import 'package:easy_stock/app/core/data/models/stock_movement.dart';
 
 class User {
   final int id;
@@ -82,6 +82,28 @@ class User {
       company: company ?? this.company,
       companyOwned: companyOwned ?? this.companyOwned,
       movements: movements ?? this.movements,
+    );
+  }
+
+  factory User.fromMap(Map<String, dynamic> map) {
+    return User(
+      id: map['id'] as int,
+      name: map['name'] as String,
+      email: map['email'] as String,
+      role: map['role'] as String,
+      createdAt: DateTime.parse(map['created_at'] as String),
+      companyId: map['company_id'] != null ? map['company_id'] as int : null,
+      company: map['company'] != null
+          ? Company.fromJson(map['company'] as Map<String, dynamic>)
+          : null,
+      companyOwned: map['companyOwned'] != null
+          ? Company.fromJson(map['companyOwned'] as Map<String, dynamic>)
+          : null,
+      movements: map['movements'] != null
+          ? (map['movements'] as List)
+                .map((e) => StockMovement.fromJson(e as Map<String, dynamic>))
+                .toList()
+          : [],
     );
   }
 }

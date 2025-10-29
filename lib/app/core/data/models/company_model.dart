@@ -1,6 +1,6 @@
-import 'package:easy_stock/domain/models/product_model.dart';
-import 'package:easy_stock/domain/models/stock_movement.dart';
-import 'package:easy_stock/domain/models/user_model.dart';
+import 'package:easy_stock/app/core/data/models/product_model.dart';
+import 'package:easy_stock/app/core/data/models/stock_movement.dart';
+import 'package:easy_stock/app/core/data/models/user_model.dart';
 
 class Company {
   final int id;

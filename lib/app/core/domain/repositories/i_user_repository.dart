@@ -1,4 +1,4 @@
-import 'package:easy_stock/domain/models/user_model.dart';
+import 'package:easy_stock/app/core/data/models/user_model.dart';
 
 abstract class IUserRepository {
   Future<User> createUser({required Map<String, dynamic> payload});
