@@ -1,4 +1,4 @@
-import 'package:easy_stock/app/presentation/components/appbar_widget.dart';
+import 'package:easy_stock/app/ui/components/appbar_widget.dart';
 import 'package:flutter/material.dart';
 
 class StockScreen extends StatelessWidget {

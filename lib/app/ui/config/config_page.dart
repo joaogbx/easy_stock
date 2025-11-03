@@ -1,4 +1,4 @@
-import 'package:easy_stock/app/presentation/login/login_screen.dart';
+import 'package:easy_stock/app/ui/auth/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 // Definições de cor Literais e Constantes para Autonomia

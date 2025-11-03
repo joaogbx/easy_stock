@@ -1,4 +1,4 @@
-import 'package:easy_stock/app/presentation/employee/register_movement/register_movement.dart';
+import 'package:easy_stock/app/ui/employee/register_movement/register_movement.dart';
 import 'package:easy_stock/app/core/enums/register_mode.dart';
 import 'package:flutter/material.dart';
 

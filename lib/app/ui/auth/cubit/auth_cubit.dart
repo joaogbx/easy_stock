@@ -22,8 +22,11 @@ class AuthCubit extends Cubit<AuthState> {
 
     final result = await iAuthRepository.autenticate(credentials: credentials);
 
+    print(result.error);
+
     if (result.isSuccess) {
       appCubit.setUserLogged(user: result.data);
+      print('usuario logado');
     }
   }
 }

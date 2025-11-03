@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:easy_stock/app/core/data/datasource/remote/auth_datasource.dart';
 import 'package:easy_stock/app/core/data/models/user_model.dart';
 
@@ -15,7 +16,9 @@ class AuthRepository implements IAuthRepository {
   Future<Result> autenticate({required credentials}) async {
     try {
       final response = await _dataSource.autenticate(credentials: credentials);
-      return Result.success(User.fromMap(response ?? {}));
+      return Result.success(User.fromMap(response['data']));
+    } on DioException catch (error) {
+      return Result.error('Erro ao autenticar: ${error.response}');
     } catch (error) {
       return Result.error('Erro ao autenticar: $error');
     }

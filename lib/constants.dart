@@ -1,1 +1,5 @@
-const apiUrl = 'http://localhost:3000.com';
+import 'package:dio/dio.dart';
+
+final apiUrl = 'http://192.168.100.8:3000';
+//const apiUrl = 'http://localhost:3000.com';
+final diohttp = Dio(BaseOptions(baseUrl: apiUrl));

@@ -1,6 +1,6 @@
 import 'package:easy_stock/app/core/config/injection.dart';
-import 'package:easy_stock/app/presentation/admin/home/home_admin_screen.dart';
-import 'package:easy_stock/app/presentation/employee/home/home_employee.dart';
+import 'package:easy_stock/app/ui/admin/home/home_admin_screen.dart';
+import 'package:easy_stock/app/ui/employee/home/home_employee.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
             255,
             0.08,
           ), // Fundo suave para o campo
-          hintStyle: TextStyle(color: Colors.white70),
+          hintStyle: TextStyle(color: Color.fromARGB(179, 255, 255, 255)),
 
           // Configurações para REMOVER o Underline/Linha Inferior Padrão:
           border: OutlineInputBorder(
