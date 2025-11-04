@@ -1,6 +1,6 @@
 import 'package:easy_stock/app/core/config/injection.dart';
-import 'package:easy_stock/app/core/ui/components/dialog_feedback.dart';
-import 'package:easy_stock/app/ui/auth/cubit/auth_cubit.dart';
+import 'package:easy_stock/app/ui/user/screens/login/cubit/auth_cubit.dart';
+import 'package:easy_stock/app/ui/user/screens/create_user/create_account_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -89,35 +89,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          // context.read<AuthCubit>().autenticate(
-                          //   email: emailController.text,
-                          //   password: passwordController.text,
-                          // );
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return DialogFeedback(
-                                success: true,
-                                title: 'Erro',
-                                message: 'Msg de erro',
-                              );
-                            },
-                          );
-                        },
-                        style: Theme.of(context).elevatedButtonTheme.style!
-                            .copyWith(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                Color.fromARGB(255, 140, 37, 199),
-                              ),
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                Colors.black,
-                              ),
-                            ),
-                        child: const Text(
-                          'Entrar',
-                          style: TextStyle(color: Colors.white),
+                      SizedBox(
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            context.read<AuthCubit>().autenticate(
+                              email: emailController.text,
+                              password: passwordController.text,
+                            );
+                          },
+
+                          child: const Text(
+                            'Entrar',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 25),
@@ -141,7 +126,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => CreateAccountScreen(),
+                                ),
+                              );
+                            },
                             child: const Text(
                               'Crie agora',
                               style: TextStyle(

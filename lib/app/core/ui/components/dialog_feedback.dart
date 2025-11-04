@@ -1,110 +1,55 @@
 import 'package:flutter/material.dart';
 
-class DialogFeedback extends StatefulWidget {
-  final String message;
-  final String title;
-  final bool success;
-
-  const DialogFeedback({
-    required this.message,
-    required this.title,
-    required this.success,
-  });
-
-  @override
-  State<DialogFeedback> createState() => _DialogFeedbackState();
+enum FeedbackType {
+  success,
+  error,
 }
 
-class _DialogFeedbackState extends State<DialogFeedback> {
-  @override
-  Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    return Padding(
-      padding: const EdgeInsets.all(70),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: Container(
-                  width: width * 0.57,
-                  height: 160,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 3, 255, 137),
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.topCenter,
-                child: Container(
-                  width: width,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 255, 255, 255),
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color.fromARGB(71, 26, 25, 25),
-                        offset: Offset(0, 10),
-                        blurRadius: 20,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [Text(widget.title), Text(widget.message)],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 20,
-                right: 20,
-                top: 0, // Posicionado no topo da Stack
-                child: CircleAvatar(
-                  // 1. Este é o seu círculo verde principal.
-                  // Ele também servirá de fundo para o "espaço".
-                  backgroundColor: const Color.fromARGB(255, 35, 212, 103),
-                  radius: 30,
+void showSnackBarFeedback({
+  required BuildContext context,
+  required String message,
+  required FeedbackType feedbackType,
+}) {
+  final color = feedbackType == FeedbackType.success
+      ? const Color.fromARGB(255, 53, 255, 137)
+      : const Color.fromARGB(255, 202, 31, 82);
 
-                  // O 'child' do CircleAvatar definirá o conteúdo interno
-                  child: Padding(
-                    // 2. Este Padding cria o "espaço" que você pediu.
-                    // O fundo verde do CircleAvatar aparecerá através dele.
-                    padding: const EdgeInsets.all(
-                      3.0,
-                    ), // Ajuste o valor para mais ou menos espaço
+  final icon = feedbackType == FeedbackType.success
+      ? Icon(
+          Icons.density_large_sharp,
+          color: Colors.white,
+        )
+      : Icon(
+          Icons.warning_amber_rounded,
+          color: Colors.white,
+        );
 
-                    child: Container(
-                      // 3. Este Container será a "linha branca"
-                      decoration: BoxDecoration(
-                        shape: BoxShape
-                            .circle, // Garante que a linha seja um círculo
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 2.0, // A espessura da linha branca
-                        ),
-                      ),
-                      child: const Center(
-                        // 4. O Ícone agora fica dentro da linha branca
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.white,
-                          // Ajustei o tamanho, pois o 'size: 30' original
-                          // ficaria muito grande para caber dentro da nova borda.
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+  final snackBar = SnackBar(
+    content: Row(
+      children: [
+        icon,
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            message,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+    backgroundColor: color,
+    duration: const Duration(seconds: 3),
+    behavior: SnackBarBehavior.floating,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+    margin: const EdgeInsets.all(10),
+  );
+
+  ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(snackBar);
 }
