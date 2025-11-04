@@ -18,7 +18,7 @@ class AuthRepository implements IAuthRepository {
       final response = await _dataSource.autenticate(credentials: credentials);
       return Result.success(User.fromMap(response['data']));
     } on DioException catch (error) {
-      return Result.error('Erro ao autenticar: ${error.response}');
+      return Result.error('Erro ao autenticar usuário');
     } catch (error) {
       return Result.error('Erro ao autenticar: $error');
     }

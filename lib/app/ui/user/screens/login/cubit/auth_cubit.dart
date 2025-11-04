@@ -18,16 +18,20 @@ class AuthCubit extends Cubit<AuthState> {
   final IUserRepository _iUserRepository;
 
   autenticate({required String email, required String password}) async {
+    emit(state.copyWith(loading: true));
     final appCubit = getIt<AppCubit>();
 
     final credentials = {'email': email, 'password': password};
 
     final result = await _iAuthRepository.autenticate(credentials: credentials);
 
-    print(result.error);
+    if (result.isError) {
+      emit(state.copyWith(errorMessage: result.error));
+    }
 
     if (result.isSuccess) {
       appCubit.setUserLogged(user: result.data);
     }
+    emit(state.copyWith(loading: false));
   }
 }

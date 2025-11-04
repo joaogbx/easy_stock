@@ -139,12 +139,13 @@ class SettingsScreenOption2 extends StatelessWidget {
                 ),
               ),
               // Sair da Conta
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: TextButton.icon(
                   onPressed: () {
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) => LoginScreen()),
+                      (Route<dynamic> route) => false,
                     );
                   },
                   style: TextButton.styleFrom(

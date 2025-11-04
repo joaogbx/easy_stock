@@ -1,7 +1,10 @@
 import 'package:easy_stock/app/core/config/injection.dart';
 import 'package:easy_stock/app/core/ui/components/dialog_feedback.dart';
+import 'package:easy_stock/app/core/ui/theme/colors_pallete.dart';
+import 'package:easy_stock/app/ui/user/screens/create_company/screens/create_company_screen.dart';
 import 'package:easy_stock/app/ui/user/screens/create_user/cubit/create_user_cubit.dart';
 import 'package:easy_stock/app/ui/user/screens/login/cubit/auth_cubit.dart';
+import 'package:easy_stock/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,9 +23,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final _formKey = GlobalKey<FormState>();
 
   // Roxo escuro do botão
-  static const Color primaryPurple = Color.fromARGB(255, 140, 37, 199);
-  // Fundo do Scaffold
-  static const Color darkBackground = Color.fromARGB(255, 20, 20, 20);
 
   // Variável de estado para simular o loading/processamento
   bool _isLoading = false;
@@ -61,9 +61,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           builder: (context, state) {
             final isLoading = state.loading;
             return Scaffold(
-              backgroundColor: darkBackground,
               appBar: AppBar(
-                backgroundColor: darkBackground,
                 elevation: 0,
                 iconTheme: const IconThemeData(color: Colors.white),
               ),
@@ -147,14 +145,20 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         // --- Botão de Registro ---
                         ElevatedButton(
                           onPressed: () async {
-                            await context.read<CreateUserCubit>().createUser(
-                              email: emailController.text,
-                              password: passwordController.text,
-                              name: nameController.text,
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return CreateCompanyScreen();
+                                },
+                              ),
                             );
+                            // await context.read<CreateUserCubit>().createUser(
+                            //   email: emailController.text,
+                            //   password: passwordController.text,
+                            //   name: nameController.text,
+                            // );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryPurple,
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(vertical: 18),
                             shape: RoundedRectangleBorder(
@@ -224,7 +228,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(
-          color: primaryPurple,
           width: 2,
         ), // Borda roxa ao focar
       ),

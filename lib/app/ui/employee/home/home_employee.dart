@@ -2,7 +2,7 @@ import 'package:easy_stock/app/core/ui/components/card_action_widget.dart';
 import 'package:easy_stock/app/core/ui/components/register_movement_button.dart';
 import 'package:easy_stock/app/core/enums/register_mode.dart';
 import 'package:easy_stock/app/core/ui/screen/historical_screen.dart';
-import 'package:easy_stock/app/ui/config/config_page.dart';
+import 'package:easy_stock/app/ui/config/config_bottom_sheet.dart';
 import 'package:easy_stock/app/ui/employee/register_movement/register_movement.dart';
 import 'package:easy_stock/app/core/ui/screen/stock_screen.dart';
 import 'package:flutter/material.dart';
