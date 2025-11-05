@@ -50,10 +50,14 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           }
 
           if (state.user != null) {
-            showSnackBarFeedback(
-              context: context,
-              feedbackType: FeedbackType.success,
-              message: 'Usuário criado com sucesso',
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return CreateCompanyScreen(
+                    user: state.user!,
+                  );
+                },
+              ),
             );
           }
         },
@@ -145,18 +149,13 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         // --- Botão de Registro ---
                         ElevatedButton(
                           onPressed: () async {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return CreateCompanyScreen();
-                                },
-                              ),
-                            );
-                            // await context.read<CreateUserCubit>().createUser(
-                            //   email: emailController.text,
-                            //   password: passwordController.text,
-                            //   name: nameController.text,
-                            // );
+                            if (_formKey.currentState!.validate()) {
+                              await context.read<CreateUserCubit>().createUser(
+                                email: emailController.text,
+                                password: passwordController.text,
+                                name: nameController.text,
+                              );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,

@@ -41,7 +41,7 @@ void showSnackBarFeedback({
       ],
     ),
     backgroundColor: color,
-    duration: const Duration(seconds: 3),
+    duration: const Duration(seconds: 2),
     behavior: SnackBarBehavior.floating,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10),

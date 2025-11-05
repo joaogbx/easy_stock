@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 const Color kCardColor = Color(0xFF1E1E1E);
 
 class CompanyDetailsStep extends StatefulWidget {
-  final ValueChanged<String> onNameChanged;
+  final Function(String) onNameChanged;
 
   const CompanyDetailsStep({
     super.key,

@@ -40,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               child: BlocBuilder<AuthCubit, AuthState>(
                 builder: (context, state) {
+                  bool loading = state.loading;
                   return Form(
                     key: _formKey,
                     child: Column(
@@ -112,10 +113,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               }
                             },
 
-                            child: const Text(
-                              'Entrar',
-                              style: TextStyle(color: Colors.white),
-                            ),
+                            child: loading
+                                ? CircularProgressIndicator()
+                                : const Text(
+                                    'Entrar',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                           ),
                         ),
                         const SizedBox(height: 25),

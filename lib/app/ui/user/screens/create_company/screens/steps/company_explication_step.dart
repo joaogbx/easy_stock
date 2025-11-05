@@ -1,3 +1,4 @@
+import 'package:easy_stock/app/core/data/models/user_model.dart';
 import 'package:easy_stock/app/core/ui/theme/colors_pallete.dart'; // Import da Paleta
 import 'package:easy_stock/constants.dart';
 import 'package:flutter/material.dart';
@@ -5,11 +6,15 @@ import 'package:flutter/material.dart';
 class CompanyExplicationStep extends StatelessWidget {
   final String companyName;
   final PageController pageController;
+  final User user;
+  final Function() createCompany;
 
   const CompanyExplicationStep({
     super.key,
     required this.companyName,
     required this.pageController,
+    required this.user,
+    required this.createCompany,
   });
 
   @override
@@ -85,10 +90,9 @@ class CompanyExplicationStep extends StatelessWidget {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             child: ElevatedButton(
-              onPressed: () => pageController.nextPage(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeIn,
-              ),
+              onPressed: () {
+                createCompany();
+              },
               child: const Padding(
                 padding: EdgeInsets.symmetric(vertical: 12),
                 child: Text(
