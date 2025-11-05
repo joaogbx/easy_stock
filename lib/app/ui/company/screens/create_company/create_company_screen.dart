@@ -4,15 +4,13 @@ import 'package:easy_stock/app/core/ui/components/dialog_feedback.dart';
 import 'package:easy_stock/app/core/ui/theme/colors_pallete.dart';
 import 'package:easy_stock/app/ui/admin/home/home_admin_screen.dart';
 import 'package:easy_stock/app/ui/employee/home/home_employee.dart';
-import 'package:easy_stock/app/ui/user/screens/create_company/cubit/create_company_cubit.dart';
-import 'package:easy_stock/app/ui/user/screens/create_company/screens/steps/company_details_step.dart';
-import 'package:easy_stock/app/ui/user/screens/create_company/screens/steps/company_explication_step.dart';
-import 'package:easy_stock/app/ui/user/screens/create_company/screens/steps/company_welcome_step.dart';
-import 'package:easy_stock/app/ui/user/screens/login/cubit/auth_cubit.dart';
-import 'package:easy_stock/app/ui/user/screens/create_user/create_account_screen.dart';
+import 'package:easy_stock/app/ui/company/cubit/create_company_cubit.dart';
+import 'package:easy_stock/app/ui/company/screens/create_company/steps/company_details_step.dart';
+import 'package:easy_stock/app/ui/company/screens/create_company/steps/company_explication_step.dart';
+import 'package:easy_stock/app/ui/company/screens/create_company/steps/company_welcome_step.dart';
+
 import 'package:easy_stock/app/ui/user/screens/login/login_screen.dart';
-import 'package:easy_stock/constants.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -61,8 +59,6 @@ class _CreateCompanyScreenState extends State<CreateCompanyScreen> {
         },
         child: BlocBuilder<CreateCompanyCubit, CreateCompanyState>(
           builder: (context, state) {
-            bool loading = state.loading;
-
             return Scaffold(
               backgroundColor: const Color.fromARGB(255, 20, 20, 20),
               body: Padding(
@@ -96,10 +92,11 @@ class _CreateCompanyScreenState extends State<CreateCompanyScreen> {
                             user: widget.user,
                             pageController: _pageController,
                             createCompany: () {
-                              context.read<CreateCompanyCubit>().createCompany(
-                                companyName: companyName,
-                                user: widget.user,
-                              );
+                              print('sadas');
+                              // context.read<CreateCompanyCubit>().createCompany(
+                              //   companyName: companyName,
+                              //   user: widget.user,
+                              // );
                             },
                           ),
                         ],

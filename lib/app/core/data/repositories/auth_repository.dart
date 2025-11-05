@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:easy_stock/app/core/data/datasource/remote/auth_datasource.dart';
+import 'package:easy_stock/app/core/data/datasource/auth_datasource.dart';
 import 'package:easy_stock/app/core/data/models/user_model.dart';
 
 import 'package:easy_stock/app/core/domain/repositories/i_auth_repository.dart';

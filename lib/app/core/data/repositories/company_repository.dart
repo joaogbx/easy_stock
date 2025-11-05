@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:easy_stock/app/core/data/datasource/remote/company_datasource.dart';
+import 'package:easy_stock/app/core/data/datasource/company_datasource.dart';
+
 import 'package:easy_stock/app/core/data/models/company_model.dart';
 import 'package:easy_stock/app/core/domain/repositories/i_company_repository.dart';
 import 'package:easy_stock/app/core/result/result.dart';

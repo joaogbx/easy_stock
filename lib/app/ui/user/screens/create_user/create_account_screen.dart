@@ -1,10 +1,8 @@
 import 'package:easy_stock/app/core/config/injection.dart';
+import 'package:easy_stock/app/core/data/models/user_model.dart';
 import 'package:easy_stock/app/core/ui/components/dialog_feedback.dart';
-import 'package:easy_stock/app/core/ui/theme/colors_pallete.dart';
-import 'package:easy_stock/app/ui/user/screens/create_company/screens/create_company_screen.dart';
+import 'package:easy_stock/app/ui/company/screens/create_company/create_company_screen.dart';
 import 'package:easy_stock/app/ui/user/screens/create_user/cubit/create_user_cubit.dart';
-import 'package:easy_stock/app/ui/user/screens/login/cubit/auth_cubit.dart';
-import 'package:easy_stock/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,11 +19,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
-  // Roxo escuro do botão
-
-  // Variável de estado para simular o loading/processamento
-  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -95,7 +88,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         TextFormField(
                           controller: nameController,
                           keyboardType: TextInputType.name,
-                          decoration: _inputDecoration('Nome Completo'),
+                          decoration: InputDecoration(
+                            hintText: 'Nome',
+                          ),
                           validator: (value) {
                             if (value == null || value.trim().isEmpty) {
                               return 'O nome é obrigatório.';
@@ -110,7 +105,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         TextFormField(
                           controller: emailController,
                           keyboardType: TextInputType.emailAddress,
-                          decoration: _inputDecoration('Email'),
+                          decoration: InputDecoration(
+                            hintText: 'Email',
+                          ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'O email é obrigatório.';
@@ -130,8 +127,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         TextFormField(
                           controller: passwordController,
                           obscureText: true,
-                          decoration: _inputDecoration(
-                            'Senha (Mín. 6 caracteres)',
+                          decoration: InputDecoration(
+                            hintText: 'Senha (Mín. 8 caracteres)',
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -149,13 +146,29 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         // --- Botão de Registro ---
                         ElevatedButton(
                           onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              await context.read<CreateUserCubit>().createUser(
-                                email: emailController.text,
-                                password: passwordController.text,
-                                name: nameController.text,
-                              );
-                            }
+                            //if (_formKey.currentState!.validate()) {
+                            //  await context.read<CreateUserCubit>().createUser(
+                            //    email: emailController.text,
+                            //    password: passwordController.text,
+                            //    name: nameController.text,
+                            //  );
+                            //}
+
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return CreateCompanyScreen(
+                                    user: User(
+                                      id: 1,
+                                      name: 'João Silva',
+                                      email: 'joao@email.com',
+                                      role: 'admin',
+                                      createdAt: DateTime.now(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
@@ -206,31 +219,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           },
         ),
       ),
-    );
-  }
-
-  // Função auxiliar para o estilo dos TextFields
-  InputDecoration _inputDecoration(String hint) {
-    return InputDecoration(
-      hintText: hint,
-      hintStyle: const TextStyle(color: Colors.white54),
-      filled: true,
-      fillColor: Colors.white.withOpacity(0.08),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide.none,
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide.none,
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(
-          width: 2,
-        ), // Borda roxa ao focar
-      ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
     );
   }
 }
