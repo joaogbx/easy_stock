@@ -16,7 +16,7 @@ void showSnackBarFeedback({
 
   final icon = feedbackType == FeedbackType.success
       ? Icon(
-          Icons.density_large_sharp,
+          Icons.check_box_outlined,
           color: Colors.white,
         )
       : Icon(

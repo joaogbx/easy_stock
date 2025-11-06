@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:easy_stock/app/core/config/injection.dart';
 import 'package:easy_stock/app/core/ui/theme/theme.dart';
 import 'package:easy_stock/app/ui/admin/home/home_admin_screen.dart';
@@ -7,8 +9,18 @@ import 'package:flutter/material.dart';
 
 void main() {
   configureDependencies();
+  FlutterError.onError = (details) {
+    FlutterError.dumpErrorToConsole(details);
+    debugPrint('⚠️ FlutterError capturado: ${details.exception}');
+  };
 
-  runApp(MyApp());
+  runZonedGuarded(
+    () => runApp(MyApp()),
+    (error, stack) {
+      debugPrint('🔥 Erro não tratado: $error');
+      debugPrint('📍 StackTrace: $stack');
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {

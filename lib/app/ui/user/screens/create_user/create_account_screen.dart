@@ -146,29 +146,13 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         // --- Botão de Registro ---
                         ElevatedButton(
                           onPressed: () async {
-                            //if (_formKey.currentState!.validate()) {
-                            //  await context.read<CreateUserCubit>().createUser(
-                            //    email: emailController.text,
-                            //    password: passwordController.text,
-                            //    name: nameController.text,
-                            //  );
-                            //}
-
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return CreateCompanyScreen(
-                                    user: User(
-                                      id: 1,
-                                      name: 'João Silva',
-                                      email: 'joao@email.com',
-                                      role: 'admin',
-                                      createdAt: DateTime.now(),
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
+                            if (_formKey.currentState!.validate()) {
+                              await context.read<CreateUserCubit>().createUser(
+                                email: emailController.text,
+                                password: passwordController.text,
+                                name: nameController.text,
+                              );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,

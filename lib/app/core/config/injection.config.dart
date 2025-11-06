@@ -34,7 +34,7 @@ import 'package:easy_stock/app/core/infra/storage/secure_storage_service.dart'
     as _i916;
 import 'package:easy_stock/app/core/utils/dio.dart' as _i696;
 import 'package:easy_stock/app/ui/company/cubit/create_company_cubit.dart'
-    as _i711;
+    as _i292;
 import 'package:easy_stock/app/ui/user/screens/create_user/cubit/create_user_cubit.dart'
     as _i636;
 import 'package:easy_stock/app/ui/user/screens/login/cubit/auth_cubit.dart'
@@ -49,7 +49,7 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    gh.factory<_i248.AuthDatasource>(() => const _i248.AuthDatasource());
+    gh.factory<_i248.AuthDatasource>(() => _i248.AuthDatasource());
     gh.factory<_i578.CompanyDatasource>(() => _i578.CompanyDatasource());
     gh.factory<_i258.UserDatasource>(() => _i258.UserDatasource());
     gh.lazySingleton<_i696.DioClient>(() => _i696.DioClient());
@@ -60,25 +60,28 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i867.UserRepository(gh<_i258.UserDatasource>()),
     );
     gh.factory<_i144.ISecureStorageService>(() => _i916.SecureStorageService());
-    gh.factory<_i636.CreateUserCubit>(
-      () => _i636.CreateUserCubit(gh<_i469.IUserRepository>()),
-    );
-    gh.factory<_i711.CreateCompanyCubit>(
-      () => _i711.CreateCompanyCubit(
+    gh.factory<_i292.CreateCompanyCubit>(
+      () => _i292.CreateCompanyCubit(
         gh<_i1056.ICompanyRepository>(),
         gh<_i469.IUserRepository>(),
       ),
     );
     gh.factory<_i236.IAuthRepository>(
-      () => _i263.AuthRepository(gh<_i248.AuthDatasource>()),
+      () => _i263.AuthRepository(
+        gh<_i248.AuthDatasource>(),
+        gh<_i144.ISecureStorageService>(),
+      ),
+    );
+    gh.factory<_i514.AuthCubit>(
+      () => _i514.AuthCubit(gh<_i236.IAuthRepository>()),
     );
     gh.lazySingleton<_i375.AppCubit>(
       () => _i375.AppCubit(gh<_i236.IAuthRepository>()),
     );
-    gh.factory<_i514.AuthCubit>(
-      () => _i514.AuthCubit(
-        gh<_i236.IAuthRepository>(),
+    gh.factory<_i636.CreateUserCubit>(
+      () => _i636.CreateUserCubit(
         gh<_i469.IUserRepository>(),
+        gh<_i236.IAuthRepository>(),
       ),
     );
     return this;

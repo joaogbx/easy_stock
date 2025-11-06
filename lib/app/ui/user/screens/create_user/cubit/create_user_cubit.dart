@@ -13,9 +13,11 @@ part 'create_user_cubit.freezed.dart';
 
 @Injectable()
 class CreateUserCubit extends Cubit<CreateUserState> {
-  CreateUserCubit(this._iUserRepository) : super(CreateUserState());
+  CreateUserCubit(this._iUserRepository, this._iAuthRepository)
+    : super(CreateUserState());
 
   final IUserRepository _iUserRepository;
+  final IAuthRepository _iAuthRepository;
 
   createUser({
     required String email,
@@ -31,7 +33,7 @@ class CreateUserCubit extends Cubit<CreateUserState> {
       'role': 'ADMIN',
     };
 
-    final result = await _iUserRepository.createUser(payload: payload);
+    final result = await _iAuthRepository.registerUser(payload: payload);
 
     if (result.isError) {
       emit(state.copyWith(errorMessage: result.error, loading: false));
