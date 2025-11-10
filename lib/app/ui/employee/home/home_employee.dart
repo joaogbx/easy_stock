@@ -1,3 +1,5 @@
+import 'package:easy_stock/app/core/config/injection.dart';
+import 'package:easy_stock/app/core/cubit/app_cubit.dart';
 import 'package:easy_stock/app/core/ui/components/card_action_widget.dart';
 import 'package:easy_stock/app/core/ui/components/register_movement_button.dart';
 import 'package:easy_stock/app/core/enums/register_mode.dart';
@@ -8,10 +10,15 @@ import 'package:easy_stock/app/core/ui/screen/stock_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class HomeEmployee extends StatelessWidget {
+class HomeEmployee extends StatefulWidget {
   final Function() onToggle;
   HomeEmployee({super.key, required this.onToggle});
 
+  @override
+  State<HomeEmployee> createState() => _HomeEmployeeState();
+}
+
+class _HomeEmployeeState extends State<HomeEmployee> {
   // Widget auxiliar para construir Cards de Funcionário
   final List<Map<String, String>> historico = [
     {'data': '22/10', 'produto': 'Arroz', 'tipo': 'Saída', 'quantidade': '5'},
@@ -35,8 +42,13 @@ class HomeEmployee extends StatelessWidget {
     },
     {'data': '20/10', 'produto': 'Caneta', 'tipo': 'Saída', 'quantidade': '2'},
   ];
+
+  final appCubit = getIt<AppCubit>();
+
   @override
   Widget build(BuildContext context) {
+    final userName = appCubit.state.userlogged!.name;
+    final userRole = appCubit.state.userlogged!.role;
     return Scaffold(
       // CORREÇÃO: Cor de fundo do Scaffold é onde o Body aparece
       backgroundColor: const Color.fromARGB(255, 20, 20, 20),
@@ -68,7 +80,7 @@ class HomeEmployee extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       ),
                       icon: Icon(Icons.swap_horiz, color: Colors.white),
-                      onPressed: onToggle,
+                      onPressed: widget.onToggle,
                     ),
                   ],
                 ),
@@ -83,14 +95,14 @@ class HomeEmployee extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Nome do usuario',
+                              userName,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 22,
                               ),
                             ),
                             Text(
-                              'Funcionario',
+                              userRole,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15,

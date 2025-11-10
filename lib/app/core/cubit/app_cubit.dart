@@ -16,12 +16,17 @@ part 'app_cubit.freezed.dart';
 @lazySingleton
 class AppCubit extends Cubit<AppState> {
   AppCubit(
-    this.iAuthRepository,
+    this._iSecureStorageService,
   ) : super(const AppState()) {}
 
-  final IAuthRepository iAuthRepository;
+  final ISecureStorageService _iSecureStorageService;
 
   void setUserLogged({required User user}) {
     emit(state.copyWith(userlogged: user));
+  }
+
+  void logout() async {
+    await _iSecureStorageService.clear();
+    emit(state.copyWith(userlogged: null));
   }
 }

@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_stock/app/core/config/injection.dart';
 import 'package:easy_stock/app/core/cubit/app_cubit.dart';
+import 'package:easy_stock/app/core/data/models/company_model.dart';
 import 'package:easy_stock/app/core/data/models/user_model.dart';
 import 'package:easy_stock/app/core/domain/repositories/i_company_repository.dart';
 import 'package:easy_stock/app/core/domain/repositories/i_user_repository.dart';
@@ -37,9 +39,12 @@ class CreateCompanyCubit extends Cubit<CreateCompanyState> {
     }
 
     if (result.isSuccess) {
-      final updateUser = await _updateUserForNewCompany(
-        result.data,
-      ); //Ira ter duas rotas e na parte de registro o usuario ira ser autenticado
+      final company = result.data as Company;
+      final payload = {'company_id': company.id};
+      final updateUser = await _iUserRepository.updateUser(
+        userId: company.ownerId!,
+        payload: payload,
+      );
 
       if (updateUser.isSuccess) {
         _appCubit.setUserLogged(user: updateUser.data);
@@ -51,15 +56,17 @@ class CreateCompanyCubit extends Cubit<CreateCompanyState> {
     emit(state.copyWith(loading: false));
   }
 
-  Future<Result<dynamic>> _updateUserForNewCompany(
-    Map<String, dynamic> data,
-  ) async {
-    final payload = {'company_id': data['company_id']};
-
-    final response = await _iUserRepository.updateUser(
-      userId: data['owner_id'],
-      payload: payload,
-    );
-    return response;
-  }
+  //Future<Result<dynamic>> _updateUserForNewCompany(
+  //  Company company,
+  //) async {
+  //  try {
+  //    final response = await _iUserRepository.updateUser(
+  //      userId: company.ownerId,
+  //      payload: {'company_id': company.id},
+  //    );
+  //    return Result.success(response);
+  //  } on DioException catch (error) {
+  //    return Result.error(error.message);
+  //  }
+  //}
 }

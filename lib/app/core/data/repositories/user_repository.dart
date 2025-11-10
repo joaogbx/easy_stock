@@ -27,8 +27,18 @@ class UserRepository implements IUserRepository {
   Future<Result> updateUser({
     required int userId,
     required Map<String, dynamic> payload,
-  }) {
-    // TODO: implement updateUser
-    throw UnimplementedError();
+  }) async {
+    try {
+      final response = await _userDatasource.updateUser(
+        payload: payload,
+        userId: userId,
+      );
+
+      return Result.success(User.fromMap(response['data']));
+    } on DioException catch (error) {
+      return Result.error('Erro ao atualizar usuário, ${error.response}');
+    } catch (error) {
+      return Result.error('Erro ao atualizar usuário, $error');
+    }
   }
 }

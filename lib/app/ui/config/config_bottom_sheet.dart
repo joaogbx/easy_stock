@@ -1,3 +1,5 @@
+import 'package:easy_stock/app/core/config/injection.dart';
+import 'package:easy_stock/app/core/cubit/app_cubit.dart';
 import 'package:easy_stock/app/ui/user/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +19,13 @@ const Color cardBackground = Color(
   0xFF2C2C2C,
 ); // Fundo para os blocos de opções
 
-class SettingsScreenOption2 extends StatelessWidget {
+class SettingsScreenOption2 extends StatefulWidget {
+  @override
+  State<SettingsScreenOption2> createState() => _SettingsScreenOption2State();
+}
+
+class _SettingsScreenOption2State extends State<SettingsScreenOption2> {
+  final _appCubit = getIt<AppCubit>();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -143,6 +151,7 @@ class SettingsScreenOption2 extends StatelessWidget {
                 width: double.infinity,
                 child: TextButton.icon(
                   onPressed: () {
+                    _appCubit.logout();
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) => LoginScreen()),
                       (Route<dynamic> route) => false,

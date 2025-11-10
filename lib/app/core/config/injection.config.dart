@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:dio/dio.dart' as _i361;
 import 'package:easy_stock/app/core/cubit/app_cubit.dart' as _i375;
 import 'package:easy_stock/app/core/data/datasource/auth_datasource.dart'
     as _i248;
@@ -32,7 +33,8 @@ import 'package:easy_stock/app/core/infra/storage/i_secure_storage_service.dart'
     as _i144;
 import 'package:easy_stock/app/core/infra/storage/secure_storage_service.dart'
     as _i916;
-import 'package:easy_stock/app/core/utils/dio.dart' as _i696;
+import 'package:easy_stock/app/core/network/network_module.dart' as _i323;
+import 'package:easy_stock/app/core/utils/auth_interceptor.dart' as _i976;
 import 'package:easy_stock/app/ui/company/cubit/create_company_cubit.dart'
     as _i292;
 import 'package:easy_stock/app/ui/user/screens/create_user/cubit/create_user_cubit.dart'
@@ -49,34 +51,37 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    gh.factory<_i248.AuthDatasource>(() => _i248.AuthDatasource());
-    gh.factory<_i578.CompanyDatasource>(() => _i578.CompanyDatasource());
-    gh.factory<_i258.UserDatasource>(() => _i258.UserDatasource());
-    gh.lazySingleton<_i696.DioClient>(() => _i696.DioClient());
+    final networkModule = _$NetworkModule();
+    gh.factory<_i144.ISecureStorageService>(() => _i916.SecureStorageService());
+    gh.factory<_i976.AuthInterceptor>(
+      () => _i976.AuthInterceptor(gh<_i144.ISecureStorageService>()),
+    );
+    gh.lazySingleton<_i375.AppCubit>(
+      () => _i375.AppCubit(gh<_i144.ISecureStorageService>()),
+    );
+    gh.lazySingleton<_i361.Dio>(
+      () => networkModule.dio(gh<_i976.AuthInterceptor>()),
+    );
+    gh.factory<_i248.AuthDatasource>(
+      () => _i248.AuthDatasource(gh<_i361.Dio>()),
+    );
+    gh.factory<_i578.CompanyDatasource>(
+      () => _i578.CompanyDatasource(gh<_i361.Dio>()),
+    );
+    gh.factory<_i258.UserDatasource>(
+      () => _i258.UserDatasource(gh<_i361.Dio>()),
+    );
+    gh.factory<_i236.IAuthRepository>(
+      () => _i263.AuthRepository(gh<_i248.AuthDatasource>()),
+    );
     gh.factory<_i1056.ICompanyRepository>(
       () => _i120.CompanyRepository(gh<_i578.CompanyDatasource>()),
     );
     gh.factory<_i469.IUserRepository>(
       () => _i867.UserRepository(gh<_i258.UserDatasource>()),
     );
-    gh.factory<_i144.ISecureStorageService>(() => _i916.SecureStorageService());
-    gh.factory<_i292.CreateCompanyCubit>(
-      () => _i292.CreateCompanyCubit(
-        gh<_i1056.ICompanyRepository>(),
-        gh<_i469.IUserRepository>(),
-      ),
-    );
-    gh.factory<_i236.IAuthRepository>(
-      () => _i263.AuthRepository(
-        gh<_i248.AuthDatasource>(),
-        gh<_i144.ISecureStorageService>(),
-      ),
-    );
     gh.factory<_i514.AuthCubit>(
       () => _i514.AuthCubit(gh<_i236.IAuthRepository>()),
-    );
-    gh.lazySingleton<_i375.AppCubit>(
-      () => _i375.AppCubit(gh<_i236.IAuthRepository>()),
     );
     gh.factory<_i636.CreateUserCubit>(
       () => _i636.CreateUserCubit(
@@ -84,6 +89,14 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i236.IAuthRepository>(),
       ),
     );
+    gh.factory<_i292.CreateCompanyCubit>(
+      () => _i292.CreateCompanyCubit(
+        gh<_i1056.ICompanyRepository>(),
+        gh<_i469.IUserRepository>(),
+      ),
+    );
     return this;
   }
 }
+
+class _$NetworkModule extends _i323.NetworkModule {}

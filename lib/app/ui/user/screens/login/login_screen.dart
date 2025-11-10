@@ -2,6 +2,7 @@ import 'package:easy_stock/app/core/config/injection.dart';
 import 'package:easy_stock/app/core/cubit/app_cubit.dart';
 import 'package:easy_stock/app/core/infra/storage/secure_storage_service.dart';
 import 'package:easy_stock/app/core/ui/components/dialog_feedback.dart';
+import 'package:easy_stock/app/ui/company/screens/create_company/create_company_screen.dart';
 import 'package:easy_stock/app/ui/employee/home/home_employee.dart';
 import 'package:easy_stock/app/ui/user/screens/login/cubit/auth_cubit.dart';
 import 'package:easy_stock/app/ui/user/screens/create_user/create_account_screen.dart';
@@ -22,7 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _cubit = getIt<AuthCubit>();
   final _appCubit = getIt<AppCubit>();
-  final SecureStorageService s = SecureStorageService();
 
   @override
   Widget build(BuildContext context) {
@@ -44,18 +44,29 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
 
                 if (_appCubit.state.userlogged != null) {
-                  showSnackBarFeedback(
-                    context: context,
-                    message: 'Usuário logado com sucesso',
-                    feedbackType: FeedbackType.success,
-                  );
+                  if (_appCubit.state.userlogged?.companyId != null) {
+                    showSnackBarFeedback(
+                      context: context,
+                      message: 'Usuário logado com sucesso',
+                      feedbackType: FeedbackType.success,
+                    );
 
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (context) => HomeEmployee(onToggle: () {}),
-                    ),
-                    (Route<dynamic> route) => false,
-                  );
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (context) => HomeEmployee(onToggle: () {}),
+                      ),
+                      (Route<dynamic> route) => false,
+                    );
+                  } else {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (context) => CreateCompanyScreen(
+                          user: _appCubit.state.userlogged!,
+                        ),
+                      ),
+                      (Route<dynamic> route) => false,
+                    );
+                  }
                 }
               },
               child: BlocBuilder<AuthCubit, AuthState>(
@@ -125,10 +136,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 50,
                           child: ElevatedButton(
                             onPressed: () async {
+                              //  if (_formKey.currentState!.validate()) {
                               context.read<AuthCubit>().autenticate(
                                 email: emailController.text,
                                 password: passwordController.text,
                               );
+                              // }
                             },
                             child: loading
                                 ? CircularProgressIndicator()

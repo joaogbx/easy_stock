@@ -17,17 +17,21 @@ class CompanyRepository implements ICompanyRepository {
     required String companyName,
     required int userId,
   }) async {
-    final payload = {'name': companyName, 'owner_id': userId};
+    final payload = {
+      'name': companyName,
+    };
 
     try {
       final response = await _companyDataSource.createCompany(payload: payload);
 
       return Result.success(Company.fromJson(response['data']));
     } on DioException catch (error) {
+      print(error);
       return Result.error(
-        error.response?.data['message'] ?? 'Erro ao criar companhia',
+        error.response?.data['error']['message'] ?? 'Erro ao criar companhia',
       );
     } catch (error) {
+      print(error);
       return Result.error('Erro ao Criar usuário, $error');
     }
   }

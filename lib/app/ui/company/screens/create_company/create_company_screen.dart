@@ -1,4 +1,5 @@
 import 'package:easy_stock/app/core/config/injection.dart';
+import 'package:easy_stock/app/core/cubit/app_cubit.dart';
 import 'package:easy_stock/app/core/data/models/user_model.dart';
 import 'package:easy_stock/app/core/ui/components/dialog_feedback.dart';
 import 'package:easy_stock/app/core/ui/theme/colors_pallete.dart';
@@ -42,7 +43,7 @@ class _CreateCompanyScreenState extends State<CreateCompanyScreen> {
             );
           }
 
-          if (state.company != null) {
+          if (getIt<AppCubit>().state.userlogged != null) {
             showSnackBarFeedback(
               context: context,
               message: 'Companhia criada com succeso',
@@ -92,11 +93,10 @@ class _CreateCompanyScreenState extends State<CreateCompanyScreen> {
                             user: widget.user,
                             pageController: _pageController,
                             createCompany: () {
-                              print('sadas');
-                              // context.read<CreateCompanyCubit>().createCompany(
-                              //   companyName: companyName,
-                              //   user: widget.user,
-                              // );
+                              context.read<CreateCompanyCubit>().createCompany(
+                                companyName: companyName,
+                                user: widget.user,
+                              );
                             },
                           ),
                         ],
