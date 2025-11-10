@@ -1,14 +1,19 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:easy_stock/constants.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class UserDatasource {
-  Future<Map<String, dynamic>> createUser({
+class CompanyDatasource {
+  CompanyDatasource(this._dioHttp);
+
+  final Dio _dioHttp;
+
+  Future<Map<String, dynamic>> createCompany({
     required Map<String, dynamic> payload,
   }) async {
-    final result = await diohttp.post('$apiUrl/user', data: payload);
+    final result = await _dioHttp.post('/company', data: payload);
 
     return jsonDecode(result.toString());
   }

@@ -1,12 +1,29 @@
+import 'dart:async';
+
+import 'package:dio/dio.dart';
 import 'package:easy_stock/app/core/config/injection.dart';
+import 'package:easy_stock/app/core/network/network_module.dart';
+import 'package:easy_stock/app/core/ui/theme/theme.dart';
+import 'package:easy_stock/app/core/utils/auth_interceptor.dart';
 import 'package:easy_stock/app/ui/admin/home/home_admin_screen.dart';
 import 'package:easy_stock/app/ui/employee/home/home_employee.dart';
+import 'package:easy_stock/app/ui/user/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   configureDependencies();
+  FlutterError.onError = (details) {
+    FlutterError.dumpErrorToConsole(details);
+    debugPrint('⚠️ FlutterError capturado: ${details.exception}');
+  };
 
-  runApp(MyApp());
+  runZonedGuarded(
+    () => runApp(MyApp()),
+    (error, stack) {
+      debugPrint('🔥 Erro não tratado: $error');
+      debugPrint('📍 StackTrace: $stack');
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,70 +32,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'App Estoque Fácil',
       // Design mais limpo e profissional
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-        scaffoldBackgroundColor: Color(0xFFF5F5F5), // Cinza muito claro
-        fontFamily: 'Roboto', // Fonte padrão clara
-        appBarTheme: AppBarTheme(
-          backgroundColor:
-              Colors.indigo.shade700, // Indigo mais escuro para o appbar
-          foregroundColor: Colors.white,
-          elevation: 0, // Sem sombra para um design mais flat
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Color.fromARGB(255, 140, 37, 199),
-
-            foregroundColor: Colors.black,
-
-            padding: EdgeInsets.symmetric(vertical: 14, horizontal: 20),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            elevation: 2,
-          ),
-        ),
-        inputDecorationTheme: const InputDecorationTheme(
-          filled: true,
-          fillColor: Color.fromRGBO(
-            255,
-            255,
-            255,
-            0.08,
-          ), // Fundo suave para o campo
-          hintStyle: TextStyle(color: Color.fromARGB(179, 255, 255, 255)),
-
-          // Configurações para REMOVER o Underline/Linha Inferior Padrão:
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            borderSide: BorderSide.none, // Remove a borda padrão
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            borderSide: BorderSide
-                .none, // Garante que a borda de foco também seja invisível
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            borderSide:
-                BorderSide.none, // Garante que a borda ativada seja invisível
-          ),
-
-          contentPadding: EdgeInsets.symmetric(
-            vertical: 18.0,
-            horizontal: 15.0,
-          ),
-        ),
-
-        // 2. Configuração da cor do CURSOR (Ponteiro)
-        textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: Colors
-              .white, // Define a cor do cursor (ponteiro de texto) como branco
-          selectionColor: Colors.white30, // Cor de seleção de texto
-          selectionHandleColor: Colors.white, // Cor do puxador de seleção
-        ),
-      ),
+      theme: getAppTheme(),
       home: Wrapper(),
     );
   }
@@ -102,9 +56,10 @@ class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: isAdmin
-          ? HomeAdmin(onToggle: _toggleUserType)
-          : HomeEmployee(onToggle: _toggleUserType),
+      body: LoginScreen(),
+      //body: isAdmin
+      //    ? HomeAdmin(onToggle: _toggleUserType)
+      //    : HomeEmployee(onToggle: _toggleUserType),
     );
   }
 }

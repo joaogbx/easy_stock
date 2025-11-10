@@ -16,7 +16,7 @@ void showSnackBarFeedback({
 
   final icon = feedbackType == FeedbackType.success
       ? Icon(
-          Icons.density_large_sharp,
+          Icons.check_box_outlined,
           color: Colors.white,
         )
       : Icon(
@@ -41,7 +41,7 @@ void showSnackBarFeedback({
       ],
     ),
     backgroundColor: color,
-    duration: const Duration(seconds: 3),
+    duration: const Duration(seconds: 2),
     behavior: SnackBarBehavior.floating,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10),
